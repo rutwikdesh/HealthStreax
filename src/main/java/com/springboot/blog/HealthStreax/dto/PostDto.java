@@ -1,29 +1,11 @@
-package com.springboot.blog.HealthStreax.entity;
+package com.springboot.blog.HealthStreax.dto;
+import lombok.Data;
 
-import jakarta.persistence.*;
-
-@Entity
-@Table(name = "posts", uniqueConstraints = {@UniqueConstraint(columnNames = {"title"})})
-public class Post {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class PostDto {
     private Long id;
-    @Column(name = "title", nullable = false)
     private String title;
-    @Column(name = "description", nullable = false)
     private String description;
-    @Column(name = "content", nullable = false)
     private String content;
-
-    public Post() {
-    }
-
-    public Post(Long id, String title, String description, String content) {
-        this.id = id;
-        this.title = title;
-        this.description = description;
-        this.content = content;
-    }
 
     public Long getId() {
         return id;
@@ -59,7 +41,7 @@ public class Post {
 
     @Override
     public String toString() {
-        return "Post{" +
+        return "PostDto{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
