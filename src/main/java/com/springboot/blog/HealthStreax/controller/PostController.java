@@ -3,6 +3,7 @@ package com.springboot.blog.HealthStreax.controller;
 import com.springboot.blog.HealthStreax.dto.PostDto;
 import com.springboot.blog.HealthStreax.dto.PostResponse;
 import com.springboot.blog.HealthStreax.service.PostService;
+import com.springboot.blog.HealthStreax.utils.AppConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,11 +29,12 @@ public class PostController {
     // Get all Posts API
     @GetMapping
     public ResponseEntity<PostResponse> getAllPosts(
-            @RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
-            @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize,
-            @RequestParam(value = "sortBy", defaultValue = "id", required = false) String sortBy
+            @RequestParam(value = "pageNo", defaultValue = AppConstants.DEFAULT_PAGE_NO, required = false) int pageNo,
+            @RequestParam(value = "pageSize", defaultValue = AppConstants.DEFAULT_PAGE_SIZE, required = false) int pageSize,
+            @RequestParam(value = "sortBy", defaultValue = AppConstants.DEFAULT_SORT_BY, required = false) String sortBy,
+            @RequestParam(value = "sortDir", defaultValue = AppConstants.DEFAULT_SORT_DIR, required = false) String sortDir
     ){
-        return new ResponseEntity<>(postService.getAllPosts(pageNo, pageSize, sortBy), HttpStatus.OK);
+        return new ResponseEntity<>(postService.getAllPosts(pageNo, pageSize, sortBy, sortDir), HttpStatus.OK);
     }
 
     // Get Post by Id API
