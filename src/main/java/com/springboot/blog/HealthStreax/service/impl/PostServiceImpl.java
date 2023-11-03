@@ -6,8 +6,11 @@ import com.springboot.blog.HealthStreax.exception.ResourceNotFoundException;
 import com.springboot.blog.HealthStreax.repository.PostRepository;
 import com.springboot.blog.HealthStreax.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,9 +38,16 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<PostDto> getAllPosts(){
-        List<Post> posts = postRepository.findAll();
-        return posts.stream().map(post -> entityToDto(post)).collect(Collectors.toList());
+    public List<PostDto> getAllPosts(int pageNo, int pageSize){
+        // Create a pageable instance
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+
+        Page<Post> posts = postRepository.findAll(pageable);
+
+        // Get the content for page object
+        List<Post> listOfPosts = posts.getContent();
+
+        return listOfPosts.stream().map(post -> entityToDto(post)).collect(Collectors.toList());
     }
 
     @Override
